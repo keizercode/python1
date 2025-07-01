@@ -13,8 +13,21 @@ SCOREBOARD_FILE = "scoreboard.json"
 def load_scoreboard():
     if os.path.exists(SCOREBOARD_FILE):
         with open(SCOREBOARD_FILE, "r") as f:
-            return json.load(f)
+            try:
+                data = json.load(f)
+                # 🛠 Konversi jika format lama (list of dicts)
+                if isinstance(data, list):
+                    converted = {}
+                    for entry in data:
+                        name = entry.get("nama") or entry.get("player") or "Anonim"
+                        converted[name] = converted.get(name, 0) + 1
+                    return converted
+                return data  # format dict (baru)
+            except Exception as e:
+                st.warning("⚠️ Scoreboard corrupt. File akan di-reset.")
+                return {}
     return {}
+
 
 def save_scoreboard(scoreboard):
     with open(SCOREBOARD_FILE, "w") as f:
