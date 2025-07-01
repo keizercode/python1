@@ -5,8 +5,8 @@ import os
 
 # ----- KONFIGURASI -----
 MIN_NUMBER = 1
-MAX_NUMBER = 100
-MAX_ATTEMPTS = 5
+MAX_NUMBER = 10
+MAX_ATTEMPTS = 3
 SCOREBOARD_FILE = "scoreboard.json"
 
 # ----- FUNGSI BANTUAN -----
