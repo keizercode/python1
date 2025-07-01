@@ -101,8 +101,8 @@ if (st.session_state.guessed_correctly or st.session_state.attempts == 0) and st
         st.error(f"💀 Game Over! Angka rahasianya adalah: {st.session_state.secret}")
     
     if st.button("🔁 Main Lagi"):
-        reset_game()
-        st.experimental_rerun()
+    reset_game()
+    st.session_state.game_started = False  # biar semua state reset alami
 
 # --- Tampilkan Scoreboard ---
 with st.expander("📊 Lihat Scoreboard"):
