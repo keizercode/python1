@@ -96,4 +96,35 @@ if st.session_state.ready_to_play and st.session_state.attempts > 0 and not st.s
         else:
             st.session_state.history.append(guess)
 
-            if guess == st
+            if guess == st.session_state.secret:
+                st.success(f"🎉 Selamat {st.session_state.penebak}, kamu berhasil nebak angkanya!")
+                st.session_state.guessed_correctly = True
+                add_win_to_scoreboard(st.session_state.penebak)
+            elif guess > st.session_state.secret:
+                st.info("📉 Terlalu besar.")
+            else:
+                st.info("📈 Terlalu kecil.")
+
+            st.session_state.attempts = max(0, st.session_state.attempts - 1)
+
+    st.write(f"📜 Tebakan sejauh ini: {', '.join(map(str, st.session_state.history))}")
+    st.write(f"❤️ Sisa kesempatan: {st.session_state.attempts}")
+
+# Game selesai
+if (st.session_state.guessed_correctly or st.session_state.attempts == 0) and st.session_state.ready_to_play:
+    if not st.session_state.guessed_correctly:
+        st.error(f"💀 {st.session_state.penebak} gagal nebak. Angkanya adalah: {st.session_state.secret}")
+        add_win_to_scoreboard(st.session_state.penyimpan)
+
+    if st.button("🔁 Main Lagi"):
+        reset_game()
+        st.experimental_rerun()
+
+# Scoreboard
+with st.expander("🏆 Scoreboard Menang"):
+    if scoreboard:
+        sorted_scores = sorted(scoreboard.items(), key=lambda x: x[1], reverse=True)
+        for i, (nama, skor) in enumerate(sorted_scores, 1):
+            st.markdown(f"**{i}. {nama}** - 🏅 {skor} kemenangan")
+    else:
+        st.write("Belum ada pemenang.")
