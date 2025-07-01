@@ -116,9 +116,9 @@ if (st.session_state.guessed_correctly or st.session_state.attempts == 0) and st
         st.error(f"💀 {st.session_state.penebak} gagal nebak. Angkanya adalah: {st.session_state.secret}")
         add_win_to_scoreboard(st.session_state.penyimpan)
 
-    if st.button("🔁 Main Lagi"):
-        reset_game()
-        st.experimental_rerun()
+    if st.button("🔁 Main Lagi"): 
+        reset_game() 
+        st.session_state.game_started = False  # ✅ biar bisa mulai ulang dengan bersih
 
 # Scoreboard
 with st.expander("🏆 Scoreboard Menang"):
